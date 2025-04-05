@@ -9,7 +9,7 @@ module.exports.loadWhislist = async (req, res) => {
     const products = await Wishlist.find({ user: userId }).populate(
       "products.productId"
     );
-    const product = products[0].products;
+    const product = products[0]?.products;
     res.render("wishlist", { product });
   } catch (error) {
     console.log(error);

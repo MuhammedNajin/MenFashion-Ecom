@@ -3,6 +3,7 @@ const Cetagory = require("../models/cetagory");
 
 function bestSelling(sort) {
   try {
+    console.log(sort, "sort");
     return new Promise(async (resolve, reject) => {
       const bestSellingTopTen = await Order.aggregate([
         {
@@ -46,8 +47,12 @@ function bestSelling(sort) {
 }
 
 function mapCategory(cetagory) {
+
+  console.log(cetagory, "cetagory");
   return new Promise((resolve, reject) => {
     const topTenCetagory = [];
+    if(cetagory.length == 0) return resolve([])
+    if (!cetagory) reject(new Error(`data did'nt recived`));
     cetagory.forEach(async (el, i) => {
       const cat = await Cetagory.findById({ _id: el._id.category });
       topTenCetagory.push(cat.name);

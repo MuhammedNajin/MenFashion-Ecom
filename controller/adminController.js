@@ -9,15 +9,19 @@ require("dotenv").config();
 
 module.exports.loadAdmin = async (req, res) => {
   try {
+    console.log("load admin ...................")
     const currentDate = new Date();
     const startDate = new Date(currentDate - 30 * 24 * 60 * 60 * 1000);
     const user = await User.find();
     const userCount = user.length;
 
+    console.log("userCount", userCount);
+    console.log("user", user)
+
     const order = await Order.find({
       date: { $gte: startDate, $lt: currentDate },
     });
-    console.log(order);
+    console.log("order", order);
     const order2 = await Order.find();
     const orderCount = order.length;
     const montlyEarning = order
@@ -36,6 +40,9 @@ module.exports.loadAdmin = async (req, res) => {
     console.log(userCount, orderCount, montlyEarning, revenue, product);
 
     //calculating  number of order per month
+    console.log("calculating  number of order per month");
+    console.log("currentDate", currentDate);
+
 
     const monthlyOrderedCount = await Order.aggregate([
       {
@@ -55,7 +62,9 @@ module.exports.loadAdmin = async (req, res) => {
         },
       },
     ]);
-    const data = Array.from({ length: 12 }).fill(0);
+
+    console.log("monthlyOrderedCount", monthlyOrderedCount);
+    console.log("monthlyOrderedCount", monthlyOrderedCount.length);
 
     // Initialize an array with 12 elements, each set to zero
     const monthlyData = Array.from({ length: 12 }).fill(0);
@@ -68,14 +77,15 @@ module.exports.loadAdmin = async (req, res) => {
         monthlyData[monthIndex] = item.totalAmount;
       }
     });
-    console.log(monthlyData);
+    console.log("fdfdifdifdif", monthlyData);
 
     const name = await adminHelpers.bestSelling("_id");
     const cetagory = await adminHelpers.bestSelling("cetagory");
     const brand = await adminHelpers.bestSelling("brand");
     const topTenCetagory = await adminHelpers.mapCategory(cetagory);
 
-    console.log("name", name);
+    console.log("name????>>>>>>>>>>>>>>>>>>>>>>>>>>>>", name, cetagory);
+    console.log("brand????>>>>>>>>>>>>>>>>>>>>>>>>>>>>", brand, topTenCetagory);
 
     res.render("adminDashboard", {
       monthlyData,
@@ -263,7 +273,7 @@ module.exports.loadAddProduct = (req, res) => {
   try {
     return Catagery.find()
       .then((data) => {
-        console.log(data[1].name);
+        console.log(data[1]?.name);
         res.render("addProduct", { cetagory: data });
       })
       .catch((err) => {
