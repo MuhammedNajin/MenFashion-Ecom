@@ -1,12 +1,11 @@
 const User = require("../models/userModel");
 const Catagery = require("../models/cetagory");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const product = require("../models/product");
 const Order = require("../models/order");
 const Wallet = require("../models/walletModal");
 const adminHelpers = require("../helpers/adminHelper");
 require("dotenv").config();
-// load admin home page
 
 module.exports.loadAdmin = async (req, res) => {
   try {
@@ -75,6 +74,8 @@ module.exports.loadAdmin = async (req, res) => {
     const cetagory = await adminHelpers.bestSelling("cetagory");
     const brand = await adminHelpers.bestSelling("brand");
     const topTenCetagory = await adminHelpers.mapCategory(cetagory);
+
+    console.log("name", name);
 
     res.render("adminDashboard", {
       monthlyData,

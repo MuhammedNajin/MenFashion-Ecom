@@ -6,7 +6,7 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next(); 
 });
-// make other http verbs with form
+
 const methodOverried = require("method-override");
 app.use(methodOverried("_method"));
 
@@ -21,9 +21,6 @@ const path = require("node:path");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/assets")));
 
-// user route
-//admin route
-
 const userRoute = require("./router/userRoute");
 app.use("/", userRoute);
 
@@ -35,7 +32,7 @@ app.use("*", (req, res) => {
 });
 
 mongoose
-  .connect("mongodb+srv://najinn675:naji123@cluster0.lvu9ql4.mongodb.net/")
+  .connect("mongodb+srv://Najin:X5rVerdp8JyiSCSz@cluster0.kbimg.mongodb.net/ecommerce")
   .then(() => {
     console.log("DB connected");
   })

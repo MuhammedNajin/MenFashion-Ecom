@@ -1,5 +1,6 @@
 module.exports.islogin = (req, res, next) => {
   try {
+    console.log("islogin middleware", req.session.admin);
     if (req.session.admin) {
       next();
     } else {
