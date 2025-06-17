@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: .
+    container_name: node-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - EMAIL=najinn@gmail.com
+      - PASSWORD=naji@123
+      - RAZORPAY_KEY_ID=rzp_test_at0lMzCavdHpBO
+      - RAZORPAY_KEY_SECRET=ggKTkKRDipDAjKdXuYDXs6XH
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
