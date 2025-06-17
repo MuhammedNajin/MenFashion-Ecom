@@ -9,8 +9,8 @@ const Razorpay = require("razorpay");
 const crypto = require("crypto");
 require("dotenv").config();
 
-const key_id = process.env.KEY_ID;
-const key_secret = process.env.KEY_SECRET;
+const key_id = process.env.RAZORPAY_KEY_ID;
+const key_secret = process.env.RAZORPAY_KEY_SECRET;
 
 const instance = new Razorpay({ key_id: key_id, key_secret: key_secret });
 
