@@ -6,11 +6,8 @@ services:
     container_name: node-backend
     ports:
       - "3001:3001"
-    environment:
-      - EMAIL=najinn@gmail.com
-      - PASSWORD=naji@123
-      - RAZORPAY_KEY_ID=rzp_test_at0lMzCavdHpBO
-      - RAZORPAY_KEY_SECRET=ggKTkKRDipDAjKdXuYDXs6XH
+    env_file:
+      - .env
     restart: unless-stopped
     networks:
       - app-network
@@ -20,11 +17,23 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./letsencrypt:/etc/letsencrypt
+      - ./letsencrypt/www:/var/www/certbot/points
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+      - ./letsencrypt/www:/var/www/certbot/points
+    entrypoint: "/bin/sh -c 'trap exit TERM; certbot certonly --webroot --webroot-path=/var/www/certbot/points -d muhammednajin.site --email najinn675@gmail.com --agree-tos --no-eff-email; sleep infinity'"
     networks:
       - app-network
 
