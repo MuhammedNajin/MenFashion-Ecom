@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    context: contextPath
+    dockerfile: Dockerfile
+    container_name: node-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - EMAIL=${EMAIL}
+      - PASSWORD=${PASSWORD}
+      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
+      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+
