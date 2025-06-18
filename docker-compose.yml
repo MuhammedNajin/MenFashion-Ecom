@@ -31,7 +31,8 @@ services:
     volumes:
       - ./letsencrypt:/etc/letsencrypt
       - ./letsencrypt/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; certbot certonly --webroot --webroot-path=/var/www/certbot -d muhammednajin.site --email najinn675@gmail.com --agree-tos --no-eff-email --force-renewal; sleep infinity'"
+    # Run certificate renewal check twice a day
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - app-network
 
